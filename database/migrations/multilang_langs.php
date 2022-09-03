@@ -30,7 +30,7 @@ class MultiLangLangs extends Migration
 
         Schema::create('multilang_langs', function (Blueprint $table) {
 
-            $table->id('id');
+            $table->id();
             $table->string('flag');
             $table->string('name');
             $table->string('short_name');

@@ -30,7 +30,7 @@ class MultiLangSettings extends Migration
 
         Schema::create('multilang_settings', function (Blueprint $table) {
 
-            $table->id('id');
+            $table->id();
             $table->string('setting_key');
             $table->string('setting_value');
             $table->timestamps();

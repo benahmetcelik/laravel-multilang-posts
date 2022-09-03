@@ -30,7 +30,7 @@ class MultiLangPosts extends Migration
 
         Schema::create('multilang_posts', function (Blueprint $table) {
 
-            $table->id('id');
+            $table->id();
             $table->string('model');
             $table->integer('model_id');
             $table->integer('status')->default(0)->comment('1: Active  2: InActive');
