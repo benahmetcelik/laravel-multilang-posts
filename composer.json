@@ -1,0 +1,48 @@
+{
+  "name": "benahmetcelik/laravel-multilang-posts",
+  "type": "library",
+  "description": "Laravel SEO Tools",
+  "keywords": [
+    "Laravel",
+    "MultiLang",
+    "Multilang Post",
+    "Laravel Multilang Post",
+    "Laravel Multilang Post",
+    "Laravel Multi Lang",
+    "Laravel Automatic Multilang"
+  ],
+  "homepage": "https://github.com/benahmetcelik/laravel-multilang-posts",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ahmet CELIK",
+      "email": "ben4hmetcelik@gmail.com",
+      "homepage": "https://github.com/benahmetcelik",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.0.0",
+    "laravel/framework": ">=5.5",
+    "digitaldream/data-converter": ">=1.0"
+  },
+  "require-dev": {
+  },
+  "suggest": {
+
+  },
+  "autoload": {
+    "psr-4": {
+      "MultiLangPost\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "MultiLangPost\\MultiLangPostServiceProvider"
+      ],
+      "aliases": {
+      }
+    }
+  }
+}
