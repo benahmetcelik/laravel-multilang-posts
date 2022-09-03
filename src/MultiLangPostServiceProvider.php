@@ -59,7 +59,7 @@ class MultiLangPostServiceProvider extends ServiceProvider
     protected function setupModels()
     {
 
-        $migrationsSource[realpath(__DIR__.'/../src/Models/MultiLang/MultiLangLangs.php')]=app_path("/Models/MultiLang/MultiLangLangs.php");
+        $migrationsSource[realpath(__DIR__.'/../src/Models/MultiLang/MultiLangLang.php')]=app_path("/Models/MultiLang/MultiLangLang.php");
         $migrationsSource[realpath(__DIR__.'/../src/Models/MultiLang/MultiLangPost.php')]=app_path("/Models/MultiLang/MultiLangPost.php");
         $migrationsSource[realpath(__DIR__.'/../src/Models/MultiLang/MultiLangSeting.php')]=app_path("/Models/MultiLang/MultiLangSeting.php");
       $this->publishes($migrationsSource, 'models');
