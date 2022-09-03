@@ -2,9 +2,9 @@
 
 namespace MultiLangPost\Traits;
 
-use App\Models\MultiLangLangs;
-use App\Models\MultiLangPost;
-use App\Models\MultiLangSeting;
+use App\Models\MultiLang\MultiLangLang;
+use App\Models\MultiLang\MultiLangPost;
+use App\Models\MultiLang\MultiLangSeting;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
@@ -26,7 +26,7 @@ trait MultiLangPostTrait
     {
         $this->multipost =  new MultiLangPost();
         $this->multipost_settings =  new MultiLangSeting();
-        $this->multipost_langs =  new MultiLangLangs();
+        $this->multipost_langs =  new MultiLangLang();
 
     }
 
