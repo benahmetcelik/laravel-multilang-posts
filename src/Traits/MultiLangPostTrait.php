@@ -2,6 +2,9 @@
 
 namespace MultiLangPost\Traits;
 
+use App\Models\MultiLangLangs;
+use App\Models\MultiLangPost;
+use App\Models\MultiLangSeting;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
@@ -15,63 +18,49 @@ use MultiLangPost\Services\Helper;
 trait MultiLangPostTrait
 {
 
+    protected $multipost;
+    protected $multipost_settings;
+    protected $multipost_langs;
 
-
-    public function getSeoTitles()
+    public function __construct()
     {
-        if ($this->seo_title == null && array_key_exists(get_class($this), config('seo.models'))) {
-                $this->generateSeoTitle();
-        }
-        return '<title>' . $this->seo_title . '</title>
-<meta property="og:title" content="' . $this->seo_title . '" />
+        $this->multipost =  new MultiLangPost();
+        $this->multipost_settings =  new MultiLangSeting();
+        $this->multipost_langs =  new MultiLangLangs();
 
-<meta name="twitter:title" content="' . $this->seo_title . '"/>
-
-';
     }
 
-
-
-
-    public function generateSeoKeywords()
-    {
-        if (!Schema::hasColumn($this->getTable(), 'seo_keywords')) {
-            Schema::table($this->getTable(), function (Blueprint $table) {
-                $table->string('seo_keywords');
-            });
+    public function getLangPost($model,$lang=''){
+        if (strlen($lang) > 0){
+            $multi_post = $this->multipost;
+             return $multi_post->where('model', get_class($this))->where('model_id', $this->id)->first();
+        }else{
+            return $model;
         }
-        $this->seo_keywords = Helper::generate_keyword($this->value(config('seo.models')[get_class($this)]['keywords_column']));
-        $this->save();
-        return $this->seo_keywords;
     }
-
-    public function generateSeoDesc()
-    {
-        if (!Schema::hasColumn($this->getTable(), 'seo_desc')) {
-            Schema::table($this->getTable(), function (Blueprint $table) {
-                $table->string('seo_desc');
-            });
-        }
-        $this->seo_desc = Helper::shorten($this->value(config('seo.models')[get_class($this)]['desc_column']), config('seo.models')[get_class($this)]['desc_lenght']);
-        $this->save();
-        return $this->seo_desc;
-    }
-
 
     /**
      * @return mixed
-     * Generate Seo Title
+     * Generate Multi Post
      */
-    public function generateSeoTitle()
+    public function generateMultiPost()
     {
-        if (!Schema::hasColumn($this->getTable(), 'seo_title')) {
-            Schema::table($this->getTable(), function (Blueprint $table) {
-                $table->string('seo_title');
+       $multi_post = $this->multipost;
+        $multipost_query = $multi_post->where('model', get_class($this))->where('model_id', $this->id)->first();
+        if (!$multipost_query) {
+            Schema::table($this->getTable(), function (Blueprint $table) use ($multi_post) {
+                foreach (Schema::getColumnListing($this) as $column) {
+                    $table->string($column);
+                    $multi_post->$column = $this->value($column);
+                }
             });
+            $multi_post->save();
+        } else {
+            foreach (Schema::getColumnListing($this) as $column) {
+                $multipost_query->$column = $this->value($column);
+            }
+            $multipost_query->save();
         }
-        $this->seo_title = $this->value(config('seo.models')[get_class($this)]['title_column']);
-        $this->save();
-        return $this->seo_title;
     }
 
 
@@ -79,16 +68,10 @@ trait MultiLangPostTrait
     {
         parent::boot();
         static::creating(function ($model) {
-            $model->seo_title = $model->generateSeoTitle();
-            $model->seo_desc = $model->generateSeoDesc();
+            $model->generateMultiPost();
         });
         static::updating(function ($model) {
-            if ($model->seo_title == null) {
-                $model->seo_title = $model->generateSeoTitle();
-            }
-            if ($model->seo_desc == null) {
-                $model->seo_desc = $model->generateSeoDesc();
-            }
+            $model->generateMultiPost();
         });
 
     }

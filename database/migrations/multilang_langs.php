@@ -10,7 +10,7 @@ use Illuminate\Database\Migrations\Migration;
 
 
 
-class MultiLangPosts extends Migration
+class MultiLangLangs extends Migration
 
 {
 
@@ -28,10 +28,14 @@ class MultiLangPosts extends Migration
 
     {
 
-        Schema::create('multilang_posts', function (Blueprint $table) {
+        Schema::create('multilang_langs', function (Blueprint $table) {
 
             $table->id('id');
+            $table->string('flag');
+            $table->string('name');
+            $table->string('short_name');
             $table->integer('status')->default(0)->comment('1: Active  2: InActive');
+            $table->softDeletes();
             $table->timestamps();
 
         });
@@ -54,7 +58,7 @@ class MultiLangPosts extends Migration
 
     {
 
-        Schema::dropIfExists('multilang_posts');
+        Schema::dropIfExists('multilang_langs');
 
     }
 
