@@ -24,14 +24,14 @@ class MultiLangPostServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->setupConfig();
-        $this->setupMigrations();
-        $this->setupModels();
+        $this->setupMultiPostConfig();
+        $this->setupMultiPostMigrations();
+        $this->setupMultiPostModels();
     }
 
 
 
-    protected function setupConfig()
+    protected function setupMultiPostConfig()
     {
         $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'multilang_post');
@@ -44,7 +44,7 @@ class MultiLangPostServiceProvider extends ServiceProvider
     /**
      * Setup the migrations.
      */
-    protected function setupMigrations()
+    protected function setupMultiPostMigrations()
     {
         $timestamp = date('Y_m_d_His');
         $migrationsSource[realpath(__DIR__.'/../database/migrations/multilang_langs.php')]=database_path("/migrations/{$timestamp}_multilang_langs.php");
@@ -56,7 +56,7 @@ class MultiLangPostServiceProvider extends ServiceProvider
     /**
      * Setup the models.
      */
-    protected function setupModels()
+    protected function setupMultiPostModels()
     {
 
         $migrationsSource[realpath(__DIR__.'/../src/Models/MultiLang/MultiLangLang.php')]=app_path("/Models/MultiLang/MultiLangLang.php");

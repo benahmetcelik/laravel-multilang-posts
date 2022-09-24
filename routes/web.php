@@ -10,9 +10,12 @@ Route::group([
 */
 
 Route::group([
-    'prefix' => 'multilangpost', 'as' => 'multilangpost::',
+    'prefix' => 'ml', 'as' => 'multilangpost::',
     'namespace' => '\MultiLangPost\Http\Controllers'], function () {
 
-    Route::get('/{model?}', ['uses' => 'MultiLangPostController@index', 'as' => 'multilangpost.index']);
+    Route::get('/{model?}', ['uses' => 'MultiLangPostController@index', 'as' => 'index']);
+    Route::get('/{lang}/{slug}', ['uses' => 'MultiLangPostController@content', 'as' => 'content']);
+    Route::get('/{route?}/{view?}/{slug}', ['uses' => 'MultiLangPostController@query', 'as' => 'query']);
+
 
 });

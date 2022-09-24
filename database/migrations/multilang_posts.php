@@ -33,7 +33,8 @@ class MultiLangPosts extends Migration
             $table->id();
             $table->string('model');
             $table->integer('model_id');
-            $table->integer('status')->default(0)->comment('1: Active  2: InActive');
+            $table->integer('status')->nullable()->default(0)->comment('1: Active  2: InActive');
+            $table->string('lang')->default('en')->nullable();
             $table->softDeletes();
             $table->timestamps();
 
